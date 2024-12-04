@@ -1,0 +1,137 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  color: black;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+
+
+/* Estilo para el botón */
+#modo {
+  width: 120px;
+  height: 40px;
+  background-color: #eee; /* Color del fondo del botón cuando el modo nocturno no está activado */
+  border: solid 5px #0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 20px;
+  position: relative;
+  transition: background-color 0.5s;
+  margin: 50px;
+  background-color: #eee;    
+  border-radius: 20px;
+  margin-left: 5px;
+}
+
+/* Animación */
+#modo::before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #333; /* Color del círculo cuando no está activado (blanco) */
+  border-radius: 50%;
+  left: 0px;
+  transition: transform 0.5s, background-color 0.5s; 
+}
+
+/* Modo nocturno al marcar el checkbox */
+body.dark-mode {
+  background-color: #121212; /* Fondo oscuro para el cuerpo */
+   /* Color de texto por defecto en modo oscuro */
+}
+
+body.dark-mode #modo {
+  background-color: #333; /* Color de fondo del botón en modo nocturno (oscuro) */
+}
+
+body.dark-mode #juego, h2::before {
+  color: #fff; /* Color de fondo del botón en modo nocturno (oscuro) */
+}
+
+body.dark-mode #modo::before {
+  background-color: #fff; /* Color del círculo en modo nocturno (oscuro) */
+  transform: translateX(80px); /* Mover el círculo al lado derecho */
+}
+
+body.dark-mode .admin-card {
+  color: white; /* Cambiar color del texto para administradores en modo oscuro */
+}
+
+/* Asegurarse de que las tarjetas no cambien de fondo */
+body.dark-mode .card {
+  background-color: white; /* Fondo blanco para las tarjetas en modo oscuro */
+  color: black; /* Color de texto negro para las tarjetas en modo oscuro */
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 600px) {
+  #modo {
+    width: 100px; /* Reducción de tamaño del botón */
+    height: 35px;
+    margin: 20px; /* Reducir márgenes en pantallas pequeñas */
+  }
+
+  #modo::before {
+    width: 25px; /* Ajuste del círculo */
+    height: 25px;
+
+  }
+  body.dark-mode #modo::before {
+    background-color: #fff; /* Color del círculo en modo nocturno (oscuro) */
+    transform: translateX(60px); /* Mover el círculo al lado derecho */
+  }
+}
+
+
+@media (max-width: 400px) {
+  #modo {
+    width: 90px; /* Reducción aún mayor en pantallas muy pequeñas */
+    height: 30px;
+    margin: 10px; /* Márgenes más pequeños */
+  }
+
+  #modo::before {
+    width: 20px; /* Ajuste del círculo */
+    height: 20px;
+  }
+  body.dark-mode #modo::before {
+    background-color: #fff; /* Color del círculo en modo nocturno (oscuro) */
+    transform: translateX(50px); /* Mover el círculo al lado derecho */
+  }
+}
+
+/* esto es para el home */
+
+.star {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: #fff; /* Color de las estrellas */
+  border-radius: 50%;
+  box-shadow: 0 0 8px yellow; /* Efecto de brillo */
+  animation: fadeOut 8s linear forwards; /* Desaparece con el tiempo */
+}
+
+/* Animación para que las estrellas se desvanezcan */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#universo {
+  position: relative; /* Esto asegura que las estrellas se posicionen en relación a esta sección */
+  overflow: hidden;   /* Esto oculta las estrellas que se vayan fuera de los límites de la sección */
+}
+
+/*aqui en perfil*/
+

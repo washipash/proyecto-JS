@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/modo.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Administrar usuarios</title>
+</head>
+<style>
+    html, body {
+        height: 100%; /* Asegura que ocupen toda la altura del viewport */
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1; /* Hace que el contenido principal tome el espacio disponible */
+    }
+
+    footer {
+        background-color: #1a202c; /* Mismo color de fondo que ya tienes */
+        color: #e2e8f0; /* Mismo color de texto */
+        text-align: center;
+        padding: 1rem;
+    }
+    .card {
+        border: 2px solid transparent;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 250px; /* Establecer altura fija para evitar que las tarjetas se deformen */
+    }
+    
+    .admin-card {
+        border-color: yellow;
+    }
+    
+    .user-card {
+        border-color: lightblue;
+    }
+    
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    
+    .card-info {
+        flex: 1;
+        overflow: hidden;
+    }
+    
+    .card-info p {
+        white-space: nowrap; /* Evita que el texto se rompa */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es muy largo */
+    }
+    
+    .card-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+    #editModal {
+        display: none;
+    }
+    #editModal:not(.hidden) {
+        display: flex;
+    }
+</style>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 h-20 right-0 bg-gray-800 p-2 flex justify-end items-center z-50">
+        <!-- Botón Modo -->
+        <button id="modo" class="text-white px-4 py-2 rounded-md"></button>
+        <!-- Botón Inicio -->
+        <button id="inicio" class="text-white px-4 py-2 rounded-md">
+            <img src="./img/inicio.png" alt="Inicio" class="inline-block w-6 h-6 mr-2" />
+            <a href="home.html">Inicio</a>
+        </button>
+        <!-- Botón Perfil -->
+        <button id="perfil" class="text-white px-4 py-2 rounded-md">
+            <img src="./img/perfil.png" alt="perfil" class="inline-block w-6 h-6 mr-2" />
+            <a href="perfil.html">Perfil</a>
+        </button>
+        <!-- Botón Salir -->
+        <button id="salir" class="text-white px-4 py-2 rounded-md">
+            <img src="./img/salir.png" alt="Salir" class="inline-block w-6 h-6 mr-2" />
+            Salir
+        </button>
+    </header>
+    <!-- Usuarios registrados -->
+    <main class="mt-28 p-6">
+        <h1 class="text-2xl font-bold mb-6">Usuarios Registrados</h1>
+        <div id="usuarios-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Aquí se mostrarán las tarjetas de usuarios -->
+        </div>
+    </main>
+    <!-- Modal de edición -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 class="text-lg font-bold mb-4">Editar Usuario</h2>
+            <form id="editForm">
+                <div class="mb-4">
+                    <label for="editNombre" class="block text-gray-700">Nombre</label>
+                    <input id="editNombre" type="text" class="w-full border rounded p-2">
+                </div>
+                <div class="mb-4">
+                    <label for="editCorreo" class="block text-gray-700">Correo</label>
+                    <input id="editCorreo" type="email" class="w-full border rounded p-2" readonly>
+                </div>
+                <div class="mb-4">
+                    <label for="editRole" class="block text-gray-700">Rol</label>
+                    <select id="editRole" class="w-full border rounded p-2">
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+                <div class="flex justify-between">
+                    <button type="button" id="cancelEdit" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 text-center py-4">
+        <p>© 2024, Creado por Osmel. Todos los derechos reservados.</p>
+        <p class="mt-2">
+            Encuéntrame en 
+            <a href="#" class="text-blue-400 hover:underline">Twitter</a> o 
+            <a href="https://github.com/washipash" class="text-blue-400 hover:underline">GitHub</a>.
+        </p>
+    </footer>
+</body>
+<script src="./js/index.js">
+</script>
+</html>

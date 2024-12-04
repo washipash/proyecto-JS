@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/modo.css">
+    <link rel="stylesheet" href="./css/perfil.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Perfil</title>
+</head>
+<body>
+     <!-- Header -->
+     <header class="fixed top-0 left-0 h-20 right-0 bg-gray-800 p-2 flex justify-end items-center z-50">
+        <button id="modo" class="text-white px-4 py-2 rounded-md"></button>
+        <button id="inicio" class="text-white px-4 py-2 rounded-md">
+            <img src="./img/inicio.png" alt="Inicio" class="inline-block w-6 h-6 mr-2" />
+            <a href="home.html">Inicio</a>
+        </button>
+        <button id="salir" class="text-white px-4 py-2 rounded-md">
+            <img src="./img/salir.png" alt="Salir" class="inline-block w-6 h-6 mr-2" />
+            Salir
+        </button>
+    </header>
+    <div id="cont">
+        <div id="info" class="mt-4 w-full max-w-md mx-auto bg-gray-100 p-6 rounded shadow">
+                <!-- Imagen del usuario -->
+            <div id="img" class="w-24 h-24 bg-gray-300 rounded-full overflow-hidden border-2 border-gray-400">
+                <img id="icono_usuario" class="w-16 h-16" 
+                    src="./img/iconos/default.png" 
+                    alt="Ícono de usuario"
+                    onerror="this.src='./img/iconos/default.png';" />
+            </div>
+            <br><br> 
+            <div class="mb-4 text-center">
+                <!-- El título dinámico se insertará aquí -->
+            </div>
+            <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium">Nombre:</span>
+                <div class="flex items-center gap-2">
+                    <span id="nombre_usuario" class="text-gray-700">No especificado</span>
+                    <button class="editar-btn bg-blue-500 text-white px-2 py-1 rounded" data-campo="nombre_usuario">Editar</button>
+                </div>
+            </div>
+            <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium">Email:</span>
+                <div class="flex items-center gap-2">
+                    <span id="email_usuario" class="text-gray-700">No especificado</span>
+                    <button class="editar-btn bg-blue-500 text-white px-2 py-1 rounded" data-campo="email_usuario">Editar</button>
+                </div>
+            </div>
+            <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium">Contraseña:</span>
+                <div class="flex items-center gap-2">
+                    <span id="contrasena_usuario" class="text-gray-700">****</span>
+                    <button class="editar-btn bg-blue-500 text-white px-2 py-1 rounded" data-campo="contrasena_usuario">Editar</button>
+                </div>
+            </div>
+        </div>
+             
+    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-4 mt-20">
+        <p>© 2024, Creado por Osmel. Todos los derechos reservados.</p>
+        <p class="mt-2">Encuéntrame en <a href="#" class="text-blue-400 underline">Twitter</a> o <a href="https://github.com/washipash" class="text-blue-400 underline">GitHub</a>.</p>
+    </footer>
+</body>
+<script src="./js/index.js">
+</script>
+<script>
+    //perfil
+// rellenar el formulario del perfil con los datos del usuario
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Cargar datos del usuario desde localStorage
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    // Verificar si el usuario tiene el rol de admin
+    if (usuario && usuario.role === "admin") {
+        // Mostrar el botón de administrar solo si el usuario es admin
+        const adminBtn = document.getElementById("admin_btn");
+        if (adminBtn) {
+            adminBtn.style.display = "block";
+        }
+    }
+
+    // Cargar datos del usuario en la interfaz
+    cargarUsuario(usuario);
+
+    // Botones de editar
+    document.querySelectorAll(".editar-btn").forEach((boton) => {
+        boton.addEventListener("click", (e) => {
+            const campo = e.target.dataset.campo;
+            const span = document.getElementById(campo);
+            const valorActual = campo === "contrasena_usuario" ? "" : span.innerText;
+
+            const input = document.createElement("input");
+            input.type = campo === "contrasena_usuario" ? "password" : "text";
+            input.value = valorActual;
+            input.className = "border rounded px-2 py-1";
+
+            const guardarBtn = document.createElement("button");
+            guardarBtn.innerText = "Guardar";
+            guardarBtn.className = "bg-green-500 text-white px-2 py-1 rounded ml-2";
+
+            const parentDiv = span.parentElement;
+            parentDiv.innerHTML = "";
+            parentDiv.appendChild(input);
+            parentDiv.appendChild(guardarBtn);
+
+            guardarBtn.addEventListener("click", () => {
+                const nuevoValor = input.value.trim();
+                if (nuevoValor) {
+                    span.innerText = campo === "contrasena_usuario" ? "****" : nuevoValor;
+                    parentDiv.innerHTML = "";
+                    parentDiv.appendChild(span);
+                    parentDiv.appendChild(e.target);
+
+                    // Actualizar en localStorage
+                    const propiedad = campo.replace("_usuario", "");
+                    usuario[propiedad === "contrasena" ? "contrasena" : propiedad] = nuevoValor;
+                    localStorage.setItem("usuario", JSON.stringify(usuario));
+
+                    alert("Información actualizada exitosamente.");
+                } else {
+                    alert("El valor no puede estar vacío.");
+                }
+            });
+        });
+    });
+});
+
+// Función para cargar los datos del usuario en la interfaz
+function cargarUsuario(usuario) {
+    if (!usuario) return;
+
+    document.getElementById("nombre_usuario").innerText = usuario.nombre || "No especificado";
+    document.getElementById("email_usuario").innerText = usuario.correo || "No especificado";
+    document.getElementById("contrasena_usuario").innerText = "****";
+
+    const iconoImg = document.getElementById("icono_usuario");
+    const iconoRuta = `./img/iconos/${usuario.icono || "default"}.png`;
+
+    fetch(iconoRuta)
+        .then(response => {
+            if (response.ok) {
+                iconoImg.src = iconoRuta;
+            } else {
+                iconoImg.src = "./img/iconos/default.png";
+            }
+        })
+        .catch(() => {
+            iconoImg.src = "./img/iconos/default.png";
+        });
+}
+
+
+</script>
+</html>
