@@ -66,7 +66,7 @@ La pagina web permite a los usuarios registrarse, iniciar sesión y acceder a fu
 │   ├── login.js         # Lógica para el inicio de sesión
 │   ├── registro.js      # Lógica para el registro de usuarios
 │
-├── login.html           # Página de inicio de sesión
+├── index.html           # Página de inicio de sesión
 ├── perfil.html          # Página de perfil de usuario
 ├── admin.html           # Panel de administrador
 ├── registrar.html       # Página de registro de usuarios
@@ -77,13 +77,15 @@ La pagina web permite a los usuarios registrarse, iniciar sesión y acceder a fu
 ## Guía de Instalación
 
 1. Clona el repositorio o descarga el proyecto como archivo ZIP.
-2. Abre el archivo `login.html` en un navegador web.
+2. Abre el archivo `index.html` en un navegador web.
 3. Asegúrate de que todos los archivos CSS y JS están vinculados correctamente.
 
 ## Uso
 
-1. Inicia sesion en `login.html` o registrarte como nuevo usuario.
+1. Inicia sesion en `index.html` o registrarte como nuevo usuario.
 2. Luego de iniciar sesion sera redirigido a la pagina de inicio o `Home.html`
+3. para crear un usario "administrador" primero se tiene que crear un usuario normal y luego ingresar
+a la pagina como administrador, en la pagina "administracion de usuarios" solo tiene que editar el usuario y asignarle el rol de administrador
 
 ## Tecnologías Utilizadas
 

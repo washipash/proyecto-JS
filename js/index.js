@@ -16,29 +16,33 @@ if (!localStorage.getItem("usuario")) {
     console.log("Usuario administrador creado:", adminUser);
 }
 
+function checkSession() {
+    const session = getCookie("session");
+    if (!session) {
+        window.location.href = "index.html"; // Redirige al login si no hay sesión
+    }
+}
 // Función para guardar cookies con una expiración de 2 horas
 function setCookie(name, value) {
     const expires = new Date();
     expires.setTime(expires.getTime() + 2 * 60 * 60 * 1000); // 2 horas
-    document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/`;
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/`;
 }
 
 // Función para obtener cookies
 function getCookie(name) {
     const nameEQ = name + "=";
-    const cookiesArray = document.cookie.split(';');
-    for (let c of cookiesArray) {
-        c = c.trim();
-        if (c.indexOf(nameEQ) === 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
     }
     return null;
 }
 
 // Función para eliminar cookies
 function deleteCookie(name) {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
 // Función de logout
@@ -48,29 +52,17 @@ function logout() {
     window.location.href = "index.html"; // Redirigir al login
 }
 
-// Modo Oscuro
-document.addEventListener("DOMContentLoaded", () => {
-    const modoBtn = document.getElementById("modo");
-    const body = document.body;
+// Obtener datos del usuario desde localStorage
+const usuario = JSON.parse(localStorage.getItem("usuario"));
+console.log("Usuario cargado:", usuario);
 
-    if (modoBtn) {
-        modoBtn.addEventListener("click", () => {
-            body.classList.toggle("dark-mode");
-        });
-    }
-
-    // Obtener datos del usuario desde localStorage
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    console.log("Usuario cargado:", usuario);
-
-    // Mostrar o esconder el botón de administrar según el rol
-    const adminBtn = document.getElementById("admin_btn");
-    if (usuario?.role === "admin" && adminBtn) {
-        adminBtn.style.display = "block"; // Mostrar botón solo para admin
-    } else if (adminBtn) {
-        adminBtn.style.display = "none"; // Esconder el botón si no es admin
-    }
-});
+// Mostrar o esconder el botón de administrar según el rol
+const adminBtn = document.getElementById("admin_btn");
+if (usuario?.role === "admin" && adminBtn) {
+    adminBtn.style.display = "block"; // Mostrar botón solo para admin
+} else if (adminBtn) {
+    adminBtn.style.display = "none"; // Esconder el botón si no es admin
+}
 
 // Asociar el botón de logout al evento
 document.getElementById('salir')?.addEventListener('click', logout);
@@ -128,7 +120,17 @@ function renderUsuarios() {
     });
 }
 
+// Modo Oscuro
+document.addEventListener("DOMContentLoaded", () => {
+    const modoBtn = document.getElementById("modo");
+    const body = document.body;
 
+    if (modoBtn) {
+        modoBtn.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+        });
+    }
+});
 
 function editarUsuario(correo) {
     const usuarios = getFromLocalStorage("usuarios");
