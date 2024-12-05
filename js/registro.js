@@ -91,5 +91,5 @@
      alert("Usuario registrado exitosamente.");
 
      // Redirigir a login.html
-     window.location.href = "login.html";
+     window.location.href = "index.html";
  }

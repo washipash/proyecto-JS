@@ -45,7 +45,7 @@ function deleteCookie(name) {
 function logout() {
     localStorage.removeItem("usuario"); // Eliminar del localStorage
     deleteCookie("usuario"); // Eliminar la cookie
-    window.location.href = "login.html"; // Redirigir al login
+    window.location.href = "index.html"; // Redirigir al login
 }
 
 // Modo Oscuro
